@@ -5,12 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS: Strings & Arrays</title>
     <link href="./dist/output.css" rel="stylesheet">
+    <script src="./assignment-logic.js"></script>
+    <style>
+        /* Custom CSS to force the slides to fill the screen width */
+        .slide {
+            flex: 0 0 100vw; /* Do not grow or shrink, take up 100% of viewport width */
+    
+        }
+    </style>
 </head>
 <body>
-<header>
-    <button class="bg-sky-500 hover:bg-sky-700 ...">Save changes</button>
-
+<header class="bg-slate-300 flex justify-between">
+    <div class="w-1/6"><img src="./icons/AIT-white.jpg" alt="AIT icon" class="w-auto"></div>
+    <div class="text-center flex-wrap self-center text-sky-800 font-extrabold text-2xl">STRINGS AND ARRAY ASSIGNMENT - JS</div>
+    <div class="text-center self-center w-1/6"><p class="w-auto">Mentor: Praveen Sir, <br> 28-October-2025</p></div>
 </header>
+
+    <!-- <button class="bg-sky-500 hover:bg-sky-700 border-4 border-indigo-600">Save changes</button> -->
+
+
+<body class="bg-gray-50 h-screen overflow-hidden">
+
+    <div class="h-full flex flex-col">
+        
+        <div class="p-0.5 flex justify-center bg-blue-950 shadow-sm sticky top-0 z-10">
+            <h1 class="text-xl font-bold text-orange-500">Scroll horizontally to navigate all the 15 Q/A.</h1>
+            <p class="text-sm px-4 text-white mt-1"> ( <span id="current-q">1</span> / 15)</p>
+            <!-- <p class="text-sm text-gray-500 mt-1">Scroll horizontally to navigate 15 Q/A.</p> -->
+        </div>
+
+        <main 
+            id="qa-container"
+            class="flex-1 flex overflow-x-scroll snap-x snap-mandatory scroll-smooth"
+        >
+
+
+<!-- Slide 1 : Question/Answer - 1 -->
+            <div class="slide snap-center flex-shrink-0 w-screen h-full py-4 flex items-center justify-center bg-white border-r">
+                <div class="max-w-5xl w-full">
+                    <p class="text-sm font-semibold text-blue-600 mb-4">Question 1 / 15</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-1">Write a program that takes a string as input and returns the reverse of the string
+without using static methods. For example, if the input is "hello," Output: "olleh."</h2>
+                    <div class="w-full max-w-screen-lg max-h-32 overflow-y-scroll pl-4 rounded-md">
+                     <img src="./images/Screenshot 2025-10-31 214434.png" alt="screen-shot-of-the-solution-code" class="w-full rounded-lg">
+                    </div>
+                    <input 
+                        id="inputOne"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow mt-1" 
+                        placeholder="Type a Word or Sentence to Reverse"
+                    ></input>
+                    <button id="ansOne" class="bg-sky-500 hover:bg-sky-400 active:bg-green-600 p-2 w-full rounded-xl mt-1">Enter</button>
+                    
+                    <p id="outputOne" class="mt-4 text-left text-lg pl-2 text-green-500 bg-slate-700 w-full min-h-max h-20 rounded-md">
+                        output_
+                    </p>
+                </div>
+            </div>
+   
+            
+<!-- Slide 1 : Question/Answer - 2 -->
+            <div class="slide snap-center flex-shrink-0 w-screen h-full p-8 flex items-center justify-center bg-gray-50 border-r">
+                <div class="max-w-xl w-full">
+                    <p class="text-sm font-semibold text-blue-600 mb-4">Question 2 / 15</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Describe the concept of 'hoisting' in JavaScript.</h2>
+                    <textarea rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-shadow" placeholder="Type your answer here..."></textarea>
+                </div>
+            </div>
+
+            <div class="slide snap-center flex-shrink-0 w-screen h-full p-8 flex items-center justify-center bg-blue-50">
+                <div class="max-w-md w-full text-center">
+                    <h2 class="text-3xl font-extrabold text-blue-800 mb-4">You've Reached the End!</h2>
+                    <p class="text-lg text-blue-600 mb-8">Please check your answers before submitting.</p>
+                    <button class="px-8 py-3 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors shadow-lg">
+                        Submit Assignment
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="p-1 bg-white border-t flex justify-between sticky bottom-0 z-10">
+            <button 
+                id="prev-btn" 
+                class="p-1 w-1/2 bg-yellow-400 text-black rounded-lg hover:bg-yellow-600 hover:scale-y-110 hover:transition-transform disabled:opacity-50 transition-colors"
+                disabled 
+            >
+                &larr; Previous
+            </button>
+            <button 
+                id="next-btn" 
+                class="p-1 w-1/2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600 hover:scale-y-110 hover:transition-transform transition-colors"
+            >
+                Next &rarr;
+            </button>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('qa-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const currentQSpan = document.getElementById('current-q');
     
+    // Total number of slides (15 questions + 1 final slide = 16 slides)
+    const TOTAL_SLIDES = 16; 
+
+    // Function to update the Q number and button states
+    function updateUI() {
+        const viewportWidth = container.clientWidth;
+        // Calculate the current index based on the scroll position
+        // Math.round is used because scroll position might not be exactly 0, 100vw, 200vw, etc.
+        const currentIndex = Math.round(container.scrollLeft / viewportWidth);
+        
+        // Update the question number display (handle the last slide)
+        currentQSpan.textContent = Math.min(currentIndex + 1, TOTAL_SLIDES);
+
+        // Update button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === TOTAL_SLIDES - 1;
+        
+        // Change the 'Next' button text on the final slide
+        if (currentIndex === TOTAL_SLIDES - 1) {
+            nextBtn.textContent = 'Submit';
+        } else {
+            nextBtn.textContent = 'Next →';
+        }
+    }
+
+    // --- Event Listeners ---
+    
+    // Next Button Click
+    nextBtn.addEventListener('click', () => {
+        const viewportWidth = container.clientWidth;
+        container.scrollBy({
+            left: viewportWidth, // Scroll right by one viewport width
+            behavior: 'smooth'
+        });
+        // We'll update the UI after the scroll is complete
+    });
+
+    // Previous Button Click
+    prevBtn.addEventListener('click', () => {
+        const viewportWidth = container.clientWidth;
+        container.scrollBy({
+            left: -viewportWidth, // Scroll left by one viewport width
+            behavior: 'smooth'
+        });
+        // We'll update the UI after the scroll is complete
+    });
+
+    // Update UI when the container is scrolled (e.g., by mouse/touch or button click)
+    container.addEventListener('scroll', updateUI);
+    
+    // Initial UI setup
+    updateUI(); 
+});
+    </script>
 </body>
 </html>
