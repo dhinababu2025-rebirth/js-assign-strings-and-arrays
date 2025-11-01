@@ -28,44 +28,70 @@ const outputData = new Array(15);
     inputData[1] = document.getElementById('inputTwo');
     enterButton[1] = document.getElementById('ansTwo');
     outputData[1] = document.getElementById('outputTwo');
-
-    // 2. Event Listener for the Enter Button
+// 2. Event Listener for the Enter Button
     enterButton[1].addEventListener('click', () => {
-        // 3. Get text from the input tag
-        const originalText = inputData[1].value;
-        let reversedText= "";
-
-        // 4. core logic - implementation
-        for(let i=originalText.length-1; i>=0; i--)
-        {
-            reversedText= reversedText+originalText[i];
+        const originalText = inputData[1].value; // 3. Get text from the input tag
+        let isPalindrome = true; 
+            const loweredText = originalText.toLowerCase(); //remove capitalisation
+            let modifiedText ="";
+            for(i=0; i<loweredText.length; i++) { //logic to filter alphabets
+                if (loweredText[i]>='a' && loweredText[i<='z'])
+                    {modifiedText=modifiedText+loweredText[i];}
+            }
+        const textLength = modifiedText.length;
+// 4. core logic - implementation
+        for(let i=0; i<textLength/2; i++) {
+            if(modifiedText[i]!=modifiedText[textLength-i-1])
+            {isPalindrome=false;
+                break;}
         }
-
-        // 5. Display output
-        outputData[1].textContent = reversedText;
+        function result() {
+            if (isPalindrome)
+            {return originalText+" is a Palindrome";}
+            else
+            {return originalText+" is not a Palindrome"}
+        }
+ // 5. Display output
+        outputData[1].textContent = result();
     });
 
 
 // Code for Q/A-3
 // 1. Select the elements
-    inputData[2] = document.getElementById('inputThree');
+    inputData[2] = document.getElementById('inputThree-first');
+    const secondInputData = document.getElementById('inputThree-second')
     enterButton[2] = document.getElementById('ansThree');
     outputData[2] = document.getElementById('outputThree');
-
     // 2. Event Listener for the Enter Button
     enterButton[2].addEventListener('click', () => {
-        // 3. Get text from the input tag
-        const originalText = inputData[2].value;
-        let reversedText= "";
-
+        // 3. Get text from the input tags
+        const firstWord = inputData[2].value;
+        const secondWord = secondInputData.value;
+        let secondWordArray = secondWord.split("");
+        let isAnagram = true;
         // 4. core logic - implementation
-        for(let i=originalText.length-1; i>=0; i--)
-        {
-            reversedText= reversedText+originalText[i];
+        for(let i=0; i<firstWord.length; i++){
+            let count = secondWordArray.length;
+            for(let j=0; j<secondWordArray.length; j++)
+            {
+                if(firstWord[i]==secondWordArray[j]) {
+                    //remove that char from secondWord
+                    secondWordArray.splice(j,1)
+                }
+            }
+            if(count == secondWordArray.length){
+                isAnagram = false;
+                break;
+            }
         }
-
+        function result() {
+            if (isAnagram)
+            {return firstWord+" & "+secondWord+" are Anagrams";}
+            else
+            {return firstWord+" & "+secondWord+" are not Anagrams"}
+        }
         // 5. Display output
-        outputData[2].textContent = reversedText;
+        outputData[2].textContent = result();
     });
 
 
