@@ -130,17 +130,21 @@ const outputData = new Array(15);
     // 2. Event Listener for the Enter Button
     enterButton[4].addEventListener('click', () => {
         // 3. Get text from the input tag
-        const originalText = inputData[4].value;
-        let reversedText= "";
+        const givenWords = inputData[4].value;
+        let wordsArray= givenWords.split(" ");
+        let longestWord = wordsArray[0];
 
         // 4. core logic - implementation
-        for(let i=originalText.length-1; i>=0; i--)
+        for(let i=1; i<wordsArray.length; i++)
         {
-            reversedText= reversedText+originalText[i];
+            if(wordsArray[i].length>longestWord.length)
+            {
+                longestWord=wordsArray[i];
+            }
         }
 
         // 5. Display output
-        outputData[4].textContent = reversedText;
+        outputData[4].textContent = longestWord+" is a longest word of the given sentence";
     });
 
 
