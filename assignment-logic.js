@@ -104,17 +104,20 @@ const outputData = new Array(15);
     // 2. Event Listener for the Enter Button
     enterButton[3].addEventListener('click', () => {
         // 3. Get text from the input tag
-        const originalText = inputData[3].value;
-        let reversedText= "";
-
+        const givenSentence = inputData[3].value;
+        const givSent = givenSentence.toLowerCase(); //convert all chars to lower case
+        let givSentArray= givSent.split(" ");
+        let titleCase = "";
         // 4. core logic - implementation
-        for(let i=originalText.length-1; i>=0; i--)
-        {
-            reversedText= reversedText+originalText[i];
+        for(let i=0; i<givSentArray.length; i++)
+        {   let firstLetter = givSentArray[i].charAt(0).toUpperCase();
+            let l = givSentArray[i].length;     // length of the current word
+            let restOfLetters = givSentArray[i].substring(1,l);
+            titleCase = titleCase+" "+firstLetter+restOfLetters;
         }
 
         // 5. Display output
-        outputData[3].textContent = reversedText;
+        outputData[3].textContent = titleCase.trim();
     });
 
 
